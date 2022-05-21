@@ -174,8 +174,6 @@ export class App extends PureComponent<Props, State> {
 
   private readonly componentRegistry: ComponentRegistry
 
-  static contextType = AppContext
-
   private stliteKernel: StliteKernel
 
   constructor(props: Props) {
