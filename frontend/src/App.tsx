@@ -22,7 +22,7 @@ import { fromJS } from "immutable"
 import { enableAllPlugins as enableImmerPlugins } from "immer"
 import classNames from "classnames"
 
-import { StliteKernel, ConnectionManager } from "stlite-kernel"
+import { StliteKernel, ConnectionManager } from "@stlite/stlite-kernel"
 
 // Other local imports.
 import AppContext from "src/components/core/AppContext"
