@@ -15,11 +15,7 @@ import {
 } from "src/theme"
 import AppWithScreencast from "./App"
 
-export interface ThemedAppProps {
-  stliteMainScriptData?: string
-}
-
-const ThemedApp = (props: ThemedAppProps): JSX.Element => {
+const ThemedApp = (): JSX.Element => {
   const defaultTheme = getDefaultTheme()
 
   const [theme, setTheme] = React.useState<ThemeConfig>(defaultTheme)
@@ -77,7 +73,6 @@ const ThemedApp = (props: ThemedAppProps): JSX.Element => {
             addThemes,
             availableThemes,
           }}
-          stliteMainScriptData={props.stliteMainScriptData}
         />
       </ThemeProvider>
     </BaseProvider>

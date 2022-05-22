@@ -22,7 +22,7 @@ import { fromJS } from "immutable"
 import { enableAllPlugins as enableImmerPlugins } from "immer"
 import classNames from "classnames"
 
-import { StliteKernel, ConnectionManager } from "@stlite/stlite-kernel"
+import { ConnectionManager, StliteKernelContext } from "@stlite/stlite-kernel"
 
 // Other local imports.
 import AppContext from "src/components/core/AppContext"
@@ -116,7 +116,6 @@ export interface Props {
     setTheme: (theme: ThemeConfig) => void
     addThemes: (themes: ThemeConfig[]) => void
   }
-  stliteMainScriptData?: string
 }
 
 interface State {
@@ -174,7 +173,7 @@ export class App extends PureComponent<Props, State> {
 
   private readonly componentRegistry: ComponentRegistry
 
-  private stliteKernel: StliteKernel
+  static contextType = StliteKernelContext
 
   constructor(props: Props) {
     super(props)
@@ -246,12 +245,6 @@ export class App extends PureComponent<Props, State> {
 
     window.streamlitDebug = {}
     window.streamlitDebug.closeConnection = this.closeConnection.bind(this)
-
-    this.stliteKernel = new StliteKernel({
-      pyodideUrl: "https://cdn.jsdelivr.net/pyodide/v0.20.0/full/pyodide.js",
-      command: "run",
-      mainScriptData: props.stliteMainScriptData,
-    })
   }
 
   /**
@@ -281,7 +274,7 @@ export class App extends PureComponent<Props, State> {
     // Initialize connection manager here, to avoid
     // "Can't call setState on a component that is not yet mounted." error.
     this.connectionManager = new ConnectionManager({
-      kernel: this.stliteKernel,
+      kernel: this.context.kernel,
       onMessage: this.handleMessage,
       onConnectionError: this.handleConnectionError,
       connectionStateChanged: this.handleConnectionStateChanged,
@@ -309,15 +302,6 @@ export class App extends PureComponent<Props, State> {
     if (this.props.s4aCommunication.currentState.forcedModalClose) {
       this.closeDialog()
     }
-    if (prevProps.stliteMainScriptData !== this.props.stliteMainScriptData) {
-      this.stliteKernel.setMainScriptData(
-        this.props.stliteMainScriptData || ""
-      )
-    }
-  }
-
-  componentWillUnmount() {
-    this.stliteKernel.dispose()
   }
 
   showError(title: string, errorNode: ReactNode): void {
