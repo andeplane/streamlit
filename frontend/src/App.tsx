@@ -711,12 +711,12 @@ export class App extends PureComponent<Props, State> {
     this.sessionEventDispatcher.handleSessionEventMsg(sessionEvent)
     if (sessionEvent.type === "scriptCompilationException") {
       this.setState({ scriptRunState: ScriptRunState.COMPILATION_ERROR })
-      const newDialog: DialogProps = {
-        type: DialogType.SCRIPT_COMPILE_ERROR,
-        exception: sessionEvent.scriptCompilationException,
-        onClose: () => {},
-      }
-      this.openDialog(newDialog)
+      // const newDialog: DialogProps = {
+      //   type: DialogType.SCRIPT_COMPILE_ERROR,
+      //   exception: sessionEvent.scriptCompilationException,
+      //   onClose: () => {},
+      // }
+      // this.openDialog(newDialog)
     } else if (
       RERUN_PROMPT_MODAL_DIALOG &&
       sessionEvent.type === "scriptChangedOnDisk"

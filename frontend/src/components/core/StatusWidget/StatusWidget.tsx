@@ -272,6 +272,7 @@ class StatusWidget extends PureComponent<StatusWidgetProps, State> {
         return this.renderScriptIsRunning()
       }
       if (!RERUN_PROMPT_MODAL_DIALOG && this.state.scriptChangedOnDisk) {
+        this.props.rerunScript(true)
         return this.renderRerunScriptPrompt()
       }
     }
